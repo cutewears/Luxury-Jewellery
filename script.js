@@ -4,9 +4,9 @@ const WHATSAPP_NUMBER = "919820997084";
 // --- PRODUCT DATABASE (Luxury Jewellery) ---
 const products = [
     { id: 1, name: "Pearl Bloom Earring", price: 5000, image: "photos/item-1.jpg" },
-    { id: 2, name: "Diamond Tennis Bracelet", price: 45000, image: "photos/item-2.jpg" },
-    { id: 3, name: "Pearl Drop Earrings", price: 8500, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800" },
-    { id: 4, name: "Rose Gold Pendant Necklace", price: 18000, image: "https://images.unsplash.com/photo-1599643478514-4a420803ee23?auto=format&fit=crop&q=80&w=800" },
+    { id: 2, name: "Sunflower Earrings", price: 45000, image: "photos/item-2.jpg" },
+    { id: 3, name: "Hand Stack", price: 8500, image: "photos/item-3.jpg" },
+    { id: 4, name: "Heart Lock Earrings", price: 18000, image: "photos/item-4.jpg" },
     { id: 5, name: "Sapphire Halo Ring", price: 32000, image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&q=80&w=800" },
     { id: 6, name: "Classic Gold Hoops", price: 15000, image: "https://images.unsplash.com/photo-1635322966219-b75ed372eb01?auto=format&fit=crop&q=80&w=800" }
 ];
