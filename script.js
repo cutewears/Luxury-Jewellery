@@ -3,12 +3,30 @@ const WHATSAPP_NUMBER = "919820997084";
 
 // --- PRODUCT DATABASE (Luxury Jewellery) ---
 const products = [
-    { id: 1, name: "Pearl Bloom Earring", price: 5000, image: "photos/item-1.jpg" },
-    { id: 2, name: "Sunflower Earrings", price: 45000, image: "photos/item-2.jpg" },
-    { id: 3, name: "Hand Stack", price: 8500, image: "photos/item-3.jpg" },
-    { id: 4, name: "Heart Lock Earrings", price: 18000, image: "photos/item-4.jpg" },
-    { id: 5, name: "Sapphire Halo Ring", price: 32000, image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&q=80&w=800" },
-    { id: 6, name: "Classic Gold Hoops", price: 15000, image: "https://images.unsplash.com/photo-1635322966219-b75ed372eb01?auto=format&fit=crop&q=80&w=800" }
+    { id: 1, name: "Item 1", price: 2100, image: "photos/item-1.jpeg" },
+    { id: 2, name: "Item 21", price: 1800, image: "photos/item-21.jpeg" },
+    { id: 3, name: "Item 17", price: 1600, image: "photos/item-17.jpeg" },
+    { id: 4, name: "Item 4", price: 1800, image: "photos/item-4.jpeg" },
+    { id: 5, name: "(Set of Four)", price: 5800, image: "photos/item-5.jpeg" },
+    { id: 6, name: "Item 6", price: 1700, image: "photos/item-6.jpeg" },
+    { id: 7, name: "Item 7", price: 1250, image: "photos/item-7.jpeg" },
+    { id: 8, name: "Item 8", price: 1700, image: "photos/item-8.jpeg" },
+    { id: 9, name: "Item 9", price: 1300, image: "photos/item-9.jpeg" },
+    { id: 10, name: "Item 10", price: 1250, image: "photos/item-10.jpeg" },
+    { id: 11, name: "Item 11", price: 1600, image: "photos/item-11.jpeg" },
+    { id: 12, name: "Item 12", price: 900, image: "photos/item-12.jpeg" },
+    { id: 13, name: "Item 13", price: 1400, image: "photos/item-13.jpeg" },
+    { id: 14, name: "Item 14", price: 1200, image: "photos/item-14.jpeg" },
+    { id: 15, name: "Item 15", price: 1600, image: "photos/item-15.jpeg" },
+    { id: 16, name: "Item 16", price: 1350, image: "photos/item-16.jpeg" },
+    { id: 17, name: "Item 3", price: 1300, image: "photos/item-3.jpeg" },
+    { id: 18, name: "Item 18", price: 1400, image: "photos/item-18.jpeg" },
+    { id: 19, name: "Item 19", price: 1600, image: "photos/item-19.jpeg" },
+    { id: 20, name: "Item 20", price: 1250, image: "photos/item-20.jpeg" },
+    { id: 21, name: "Item 2", price: 1350, image: "photos/item-2.jpeg" },
+    { id: 22, name: "Item 22", price: 1400, image: "photos/item-22.jpeg" },
+    { id: 23, name: "Item 23", price: 1500, image: "photos/item-23.jpeg" },
+    { id: 24, name: "Item 24", price: 1500, image: "photos/item-24.jpeg" }
 ];
 
 // --- CART STATE ---
