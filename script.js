@@ -3,8 +3,8 @@ const WHATSAPP_NUMBER = "919820997084";
 
 // --- PRODUCT DATABASE (Luxury Jewellery) ---
 const products = [
-    { id: 1, name: "18k Gold Minimalist Stacking Ring", price: 12500, image: "https://images.unsplash.com/photo-1605100804763-247f67b2548e?auto=format&fit=crop&q=80&w=800" },
-    { id: 2, name: "Diamond Tennis Bracelet", price: 45000, image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800" },
+    { id: 1, name: "Pearl Bloom Earring", price: 5000, image: "photos/item-1.jpg" },
+    { id: 2, name: "Diamond Tennis Bracelet", price: 45000, image: "photos/item-2.jpg" },
     { id: 3, name: "Pearl Drop Earrings", price: 8500, image: "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=800" },
     { id: 4, name: "Rose Gold Pendant Necklace", price: 18000, image: "https://images.unsplash.com/photo-1599643478514-4a420803ee23?auto=format&fit=crop&q=80&w=800" },
     { id: 5, name: "Sapphire Halo Ring", price: 32000, image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&q=80&w=800" },
@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
 function renderProducts(container, limit) {
     const itemsToShow = products.slice(0, limit);
     container.innerHTML = itemsToShow.map(product => `
-        <div class="group flex flex-col cursor-pointer">
-            <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4">
+        <div class="group flex flex-col cursor-pointer bg-white p-3 md:p-4 rounded-md shadow-md hover:shadow-xl transition-all duration-300 border border-neutral-100">
+            <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4 rounded-sm">
                 <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full md:group-hover:scale-105 transition duration-700 ease-out">
                 <button onclick="addToCart(${product.id})" class="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4 bg-white/95 backdrop-blur text-black py-2.5 md:py-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 font-medium text-[10px] md:text-xs tracking-widest uppercase shadow-sm">
                     Add to Bag
                 </button>
             </div>
-            <div class="flex flex-col items-center text-center px-1">
+            <div class="flex flex-col items-center text-center px-1 pb-1">
                 <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full">${product.name}</h3>
                 <span class="text-neutral-500 tracking-wide text-xs md:text-sm mt-1">₹${product.price.toLocaleString('en-IN')}</span>
             </div>
@@ -72,7 +72,6 @@ window.addToCart = function(productId) {
 
     saveCart();
     updateCartUI();
-    openCart();
 };
 
 window.updateQuantity = function(productId, change) {
@@ -160,18 +159,25 @@ window.openCart = function() {
 window.checkoutWhatsApp = function() {
     if (cart.length === 0) return alert("Your bag is empty!");
 
-    let message = `*✨ New Jewellery Order from Cutewears ✨*\n\nHello! I would like to order:\n\n`;
+    let message = `✨ *New Order – Cutewears* ✨\n\n`;
+    message += `🛍️ *Order Details:*\n\n`;
+    
     let subtotal = 0;
 
-    cart.forEach(item => {
+    cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
         subtotal += itemTotal;
-        message += `💎 *${item.name}*\n   Qty: ${item.quantity} x ₹${item.price.toLocaleString('en-IN')}\n   Sub: ₹${itemTotal.toLocaleString('en-IN')}\n\n`;
+        
+        message += `${index + 1}. ${item.name}\n`;
+        message += `   Quantity: ${item.quantity}\n`;
+        message += `   Price: ₹${(item.price * item.quantity).toLocaleString('en-IN')}\n\n`;
     });
 
-    message += `───────────────────\n`;
-    message += `💰 *Total Amount:* ₹${subtotal.toLocaleString('en-IN')}\n\n`;
-    message += `Please confirm my order and share payment details. ✨`;
+    message += `━━━━━━━━━━━━━━\n`;
+    message += ` *Total Amount:* ₹${subtotal.toLocaleString('en-IN')}\n`;
+    message += `━━━━━━━━━━━━━━\n\n`;
+    message += `Please confirm product availability and share the payment details.\n\n`;
+    message += `Thank you! `;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
