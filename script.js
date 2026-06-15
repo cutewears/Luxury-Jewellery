@@ -24,7 +24,7 @@ const products = [
     { id: 19, name: "Sapphire Dangle Earrings", price: 1600, image: "photos/item-19.jpeg" },
     { id: 20, name: "Diamond Cluster Pendant", price: 1250, image: "photos/item-20.jpeg" },
     { id: 21, name: "Polki Kundan Necklace", price: 1350, image: "photos/item-2.jpeg" },
-    { id: 22, name: "Flora Bloom Earring", price: 1400, image: "photos/item-22.jpeg" },
+    { id: 22, name: "Pearl Bloom Earring", price: 1400, image: "photos/item-22.jpeg" },
     { id: 23, name: "Rose Quartz Bracelet", price: 1500, image: "photos/item-23.jpeg" },
     { id: 24, name: "Gold Tassel Earrings", price: 1500, image: "photos/item-24.jpeg" }
 ];
