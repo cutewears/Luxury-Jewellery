@@ -48,12 +48,12 @@ try {
 // --- INITIALIZE PAGE ---
 document.addEventListener('DOMContentLoaded', () => {
     document.body.insertAdjacentHTML('beforeend', `
-        <div id="product-modal-overlay" class="fixed inset-0 bg-black/60 z-[60] hidden flex items-center justify-center backdrop-blur-sm opacity-0 transition-opacity duration-300 px-4">
-            <div id="product-modal-content" class="bg-white p-4 md:p-8 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300 relative flex flex-col md:flex-row gap-6 md:gap-8 no-scrollbar">
+        <div id="product-modal-overlay" class="fixed inset-0 bg-black/70 z-[60] hidden flex items-end md:items-center justify-center backdrop-blur-sm opacity-0 transition-opacity duration-300 md:px-4">
+            <div id="product-modal-content" class="bg-white p-5 md:p-8 rounded-t-3xl md:rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] md:max-h-[85vh] overflow-y-auto transform translate-y-full md:translate-y-0 md:scale-95 transition-transform duration-300 relative flex flex-col md:flex-row gap-6 md:gap-10 no-scrollbar">
             </div>
         </div>
         <div id="toast-notification" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-neutral-900 text-white px-6 py-3 rounded-full shadow-2xl text-sm font-medium z-[70] translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2">
-            <span id="toast-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span id="toast-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
             <span id="toast-message">Successfully added to bag!</span>
         </div>
     `);
@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCartUI();
     
-    // Check which page we are on and render accordingly
     const productContainer = document.getElementById('product-container');
     const wishlistContainer = document.getElementById('wishlist-container');
     
@@ -78,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- RENDER PRODUCTS (With Light Frame & Heart Icon) ---
+// --- RENDER PRODUCTS ---
 function renderProducts(container, limit) {
     const itemsToShow = products.slice(0, limit);
     
@@ -89,20 +88,15 @@ function renderProducts(container, limit) {
             : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
 
         return `
-        <div class="group flex flex-col bg-white border border-neutral-200 p-2.5 md:p-3 rounded-xl shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+        <div class="group flex flex-col bg-white border border-neutral-100 p-2.5 md:p-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
             <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4 rounded-lg cursor-pointer" onclick="openProductModal(${product.id})">
-                
                 <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-2 right-2 z-10 p-2 bg-white/90 backdrop-blur rounded-full text-neutral-400 hover:text-[#E1306C] hover:scale-110 transition shadow-sm">
                     ${heartSVG}
                 </button>
-
                 <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full md:group-hover:scale-105 transition duration-700 ease-out">
-                <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-2 md:bottom-3 left-2 md:left-3 right-2 md:right-3 bg-white/95 backdrop-blur text-black py-2 md:py-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 font-medium text-[10px] md:text-xs tracking-widest uppercase shadow-sm hover:bg-black hover:text-white rounded-md">
-                    Quick Add
-                </button>
             </div>
             <div class="flex flex-col items-center text-center px-1 pb-1 cursor-pointer" onclick="openProductModal(${product.id})">
-                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full hover:text-neutral-500 transition">${product.name}</h3>
+                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full group-hover:text-neutral-500 transition">${product.name}</h3>
                 <span class="text-neutral-500 tracking-wide text-xs md:text-sm mt-1">₹${product.price.toLocaleString('en-IN')}</span>
             </div>
         </div>
@@ -113,7 +107,7 @@ function renderProducts(container, limit) {
 // --- RENDER WISHLIST PAGE ---
 function renderWishlist() {
     const container = document.getElementById('wishlist-container');
-    if (!container) return; // Only run if we are on wishlist.html
+    if (!container) return; 
 
     if (wishlist.length === 0) {
         container.innerHTML = `
@@ -127,26 +121,21 @@ function renderWishlist() {
         return;
     }
 
-    // Reuse the render code but only for wished items
     const wishedProducts = products.filter(p => wishlist.includes(p.id));
     
     container.innerHTML = wishedProducts.map(product => {
-        // By definition, items here are in the wishlist, so heart is filled
         const heartSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E1306C" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
 
         return `
-        <div class="group flex flex-col bg-white border border-neutral-200 p-2.5 md:p-3 rounded-xl shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+        <div class="group flex flex-col bg-white border border-neutral-100 p-2.5 md:p-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
             <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4 rounded-lg cursor-pointer" onclick="openProductModal(${product.id})">
                 <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-2 right-2 z-10 p-2 bg-white/90 backdrop-blur rounded-full text-neutral-400 hover:text-[#E1306C] hover:scale-110 transition shadow-sm">
                     ${heartSVG}
                 </button>
                 <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full md:group-hover:scale-105 transition duration-700 ease-out">
-                <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-2 md:bottom-3 left-2 md:left-3 right-2 md:right-3 bg-white/95 backdrop-blur text-black py-2 md:py-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 font-medium text-[10px] md:text-xs tracking-widest uppercase shadow-sm hover:bg-black hover:text-white rounded-md">
-                    Quick Add
-                </button>
             </div>
             <div class="flex flex-col items-center text-center px-1 pb-1 cursor-pointer" onclick="openProductModal(${product.id})">
-                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full hover:text-neutral-500 transition">${product.name}</h3>
+                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full group-hover:text-neutral-500 transition">${product.name}</h3>
                 <span class="text-neutral-500 tracking-wide text-xs md:text-sm mt-1">₹${product.price.toLocaleString('en-IN')}</span>
             </div>
         </div>
@@ -159,19 +148,15 @@ window.toggleWishlist = function(productId) {
     const index = wishlist.indexOf(productId);
     
     if (index > -1) {
-        // Remove from wishlist
         wishlist.splice(index, 1);
         showToast("Removed from wishlist", "wishlist");
     } else {
-        // Add to wishlist
         wishlist.push(productId);
         showToast("Added to wishlist! ❤️", "wishlist");
     }
     
-    // Save to local storage
     localStorage.setItem('cutewears_wishlist', JSON.stringify(wishlist));
     
-    // Re-render the UI based on what page we are on
     const productContainer = document.getElementById('product-container');
     const wishlistContainer = document.getElementById('wishlist-container');
     
@@ -196,52 +181,71 @@ window.openProductModal = function(productId) {
     currentModalQty = 1;
     modalTotalAdded = 0;
 
-    const stock = Math.floor(Math.random() * 5) + 1;
-
     const modalContent = document.getElementById('product-modal-content');
+    
     modalContent.innerHTML = `
-        <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-neutral-500 hover:text-black p-2 bg-white/80 backdrop-blur rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition">✕</button>
-        <div class="w-full md:w-1/2 bg-neutral-100 rounded-lg overflow-hidden min-h-[300px]">
-            <img src="${product.image}" class="w-full h-full object-cover">
+        <button onclick="closeProductModal()" class="absolute top-4 right-4 z-20 text-neutral-400 hover:text-black p-2 bg-white/90 backdrop-blur rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+        
+        <div class="w-full md:w-1/2 bg-neutral-50 rounded-xl overflow-hidden h-64 md:h-auto md:min-h-[450px] relative flex-shrink-0">
+            <img src="${product.image}" class="w-full h-full object-cover absolute inset-0">
         </div>
-        <div class="w-full md:w-1/2 flex flex-col justify-center py-2 md:py-0">
-            <h2 class="text-2xl md:text-3xl font-serif mb-2 text-neutral-900">${product.name}</h2>
-            <p class="text-xl font-medium mb-6">₹${product.price.toLocaleString('en-IN')}</p>
+        
+        <div class="w-full md:w-1/2 flex flex-col justify-center py-2 md:py-6">
+            <h2 class="text-2xl md:text-3xl font-serif mb-2 text-neutral-900 leading-tight pr-8">${product.name}</h2>
+            <p class="text-lg md:text-xl font-medium mb-6 text-neutral-800">₹${product.price.toLocaleString('en-IN')}</p>
 
-            <div class="bg-[#E8EBE0]/60 border border-[#E8EBE0] rounded-lg p-5 mb-6 space-y-3 text-sm text-neutral-800">
-                <p class="flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h12l4 4v7c0 1.1-.9 2-2 2h-2"/><circle cx="8" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M15 5v4"/></svg> Estimate delivery times: <strong>3-5 days</strong></p>
-                <hr class="border-neutral-300 border-dashed">
-                <p class="flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> <strong>No Cash On Delivery</strong> </p>
-                <hr class="border-neutral-300 border-dashed">
-                <p class="flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> Enjoy Free Shipping on Orders Above <strong>₹3100 </strong></p>
+            <div class="bg-[#faf9f8] border border-neutral-200 rounded-xl p-4 md:p-5 mb-6 space-y-4 text-xs md:text-sm text-neutral-800">
+                <div class="flex items-start gap-3">
+                    <svg class="flex-shrink-0 mt-0.5 text-neutral-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                    <span class="leading-snug">Estimate delivery times: <strong class="font-semibold text-black">3-5 days</strong></span>
+                </div>
+                <hr class="border-neutral-200 border-dashed">
+                <div class="flex items-start gap-3">
+                    <svg class="flex-shrink-0 mt-0.5 text-neutral-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    <span class="leading-snug"><strong class="font-semibold text-black">No Cash On Delivery</strong> (Prepaid Only)</span>
+                </div>
+                <hr class="border-neutral-200 border-dashed">
+                <div class="flex items-start gap-3">
+                    <svg class="flex-shrink-0 mt-0.5 text-neutral-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+                    <span class="leading-snug">Enjoy Free Shipping on Orders Above <strong class="font-semibold text-black">₹3100</strong></span>
+                </div>
             </div>
 
-            <p class="text-sm text-neutral-600 mb-6">Hurry up! Only <span class="text-[#D32F2F] font-semibold">Limited items</span> left in stock</p>
+            <p class="text-xs md:text-sm text-neutral-500 mb-5">Hurry up! Only <span class="text-[#D32F2F] font-medium">Limited items</span> left in stock</p>
 
-            <div class="flex flex-col sm:flex-row gap-4 items-center">
-                <div class="flex items-center border border-black rounded-full overflow-hidden bg-white w-full sm:w-32 justify-between flex-shrink-0">
-                    <button onclick="updateModalQty(-1)" class="px-4 py-3 md:py-4 hover:bg-neutral-100 transition w-full">-</button>
+            <div class="flex flex-col sm:flex-row gap-3 items-center">
+                <div class="flex items-center border border-neutral-300 rounded-full overflow-hidden bg-white w-full sm:w-32 justify-between flex-shrink-0 h-12">
+                    <button onclick="updateModalQty(-1)" class="px-4 h-full hover:bg-neutral-50 transition flex items-center justify-center w-full text-lg">-</button>
                     <span id="modal-qty" class="text-center font-medium w-full pointer-events-none">1</span>
-                    <button onclick="updateModalQty(1)" class="px-4 py-3 md:py-4 hover:bg-neutral-100 transition w-full">+</button>
+                    <button onclick="updateModalQty(1)" class="px-4 h-full hover:bg-neutral-50 transition flex items-center justify-center w-full text-lg">+</button>
                 </div>
 
-                <button onclick="addFromModal(${product.id})" class="w-full flex-1 bg-black text-white py-3 md:py-4 px-6 rounded-full uppercase tracking-widest text-xs font-medium hover:bg-neutral-800 transition flex justify-center items-center gap-2">
+                <button onclick="addFromModal(${product.id})" class="w-full flex-1 bg-black text-white h-12 px-6 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-neutral-800 transition flex justify-center items-center gap-2">
                     Add to Cart <span id="modal-btn-counter" class="bg-white text-black w-5 h-5 flex items-center justify-center rounded-full text-[10px] hidden font-bold">0</span>
                 </button>
             </div>
 
-            <button onclick="shareProduct(${product.id})" class="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-neutral-500 hover:text-black transition w-full">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            <button onclick="shareProduct(${product.id})" class="mt-5 flex items-center justify-center gap-2 text-xs md:text-sm font-medium text-neutral-500 hover:text-black transition w-full py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
                 Share this product
             </button>
         </div>
     `;
 
     const overlay = document.getElementById('product-modal-overlay');
+    const modalWindow = document.getElementById('product-modal-content');
+    
     overlay.classList.remove('hidden');
+    // Small delay to allow display:block to apply before animating opacity/transform
     setTimeout(() => {
         overlay.classList.remove('opacity-0');
-        modalContent.classList.remove('scale-95');
+        if(window.innerWidth < 768) {
+            modalWindow.classList.remove('translate-y-full'); // Mobile slides up
+        } else {
+            modalWindow.classList.remove('scale-95'); // Desktop scales up
+        }
     }, 10);
 };
 
@@ -250,7 +254,11 @@ window.closeProductModal = function() {
     const modalContent = document.getElementById('product-modal-content');
     
     overlay.classList.add('opacity-0');
-    modalContent.classList.add('scale-95');
+    if(window.innerWidth < 768) {
+        modalContent.classList.add('translate-y-full');
+    } else {
+        modalContent.classList.add('scale-95');
+    }
     
     setTimeout(() => {
         overlay.classList.add('hidden');
@@ -365,11 +373,10 @@ window.showToast = function(msg = "Successfully added to bag!", type = "cart") {
 
     if (toastMsg) toastMsg.innerText = msg;
     
-    // Change icon based on type of toast
     if (type === "wishlist") {
         toastIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E1306C" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
     } else {
-        toastIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+        toastIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
     }
 
     toast.classList.remove('translate-y-20', 'opacity-0');
@@ -433,7 +440,7 @@ function updateCartUI() {
     cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
 
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="text-neutral-500 text-center mt-10">Your bag is empty.</p>';
+        cartItemsContainer.innerHTML = '<p class="text-neutral-500 text-center mt-10 text-sm">Your shopping bag is empty.</p>';
         if(cartFooter) {
             cartFooter.innerHTML = generateCartFooterHtml(0);
         }
@@ -445,7 +452,7 @@ function updateCartUI() {
         totalValue += item.price * item.quantity;
         return `
             <div class="flex gap-4 border-b border-neutral-100 pb-5">
-                <img src="${item.image}" class="w-20 h-20 object-cover bg-neutral-100 flex-shrink-0">
+                <img src="${item.image}" class="w-20 h-20 object-cover bg-neutral-100 flex-shrink-0 rounded-md">
                 <div class="flex-1 flex flex-col justify-between">
                     <div class="flex justify-between items-start">
                         <div class="pr-2">
@@ -453,13 +460,13 @@ function updateCartUI() {
                             <p class="text-sm text-neutral-500 mt-1">₹${item.price.toLocaleString('en-IN')}</p>
                         </div>
                         <button onclick="removeItem(${item.id})" class="text-neutral-400 hover:text-black transition p-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                         </button>
                     </div>
-                    <div class="flex items-center w-max border border-neutral-200 mt-3">
-                        <button onclick="updateQuantity(${item.id}, -1)" class="px-3 py-1 text-neutral-500 hover:text-black hover:bg-neutral-50 transition">-</button>
-                        <span class="px-3 text-sm font-medium w-8 text-center">${item.quantity}</span>
-                        <button onclick="updateQuantity(${item.id}, 1)" class="px-3 py-1 text-neutral-500 hover:text-black hover:bg-neutral-50 transition">+</button>
+                    <div class="flex items-center w-max border border-neutral-200 mt-3 rounded-md overflow-hidden">
+                        <button onclick="updateQuantity(${item.id}, -1)" class="px-3 py-1 text-neutral-500 hover:text-black hover:bg-neutral-50 transition bg-white">-</button>
+                        <span class="px-3 text-xs font-medium w-8 text-center bg-white">${item.quantity}</span>
+                        <button onclick="updateQuantity(${item.id}, 1)" class="px-3 py-1 text-neutral-500 hover:text-black hover:bg-neutral-50 transition bg-white">+</button>
                     </div>
                 </div>
             </div>
@@ -476,10 +483,10 @@ function generateCartFooterHtml(totalValue) {
     
     if (totalValue > 0) {
         if (totalValue >= 3100) {
-            shippingHtml = `<div class="text-center mb-4 text-sm font-medium text-[#25D366] bg-[#25D366]/10 py-2 rounded-md border border-[#25D366]/20">✨ Free Shipping Unlocked! ✨</div>`;
+            shippingHtml = `<div class="text-center mb-4 text-xs font-medium text-[#25D366] bg-[#25D366]/10 py-2 rounded-md border border-[#25D366]/20">✨ Free Shipping Unlocked! ✨</div>`;
         } else {
             const remaining = 3100 - totalValue;
-            shippingHtml = `<div class="text-center mb-4 text-sm text-neutral-600 bg-white py-2 rounded-md border border-neutral-200">Add ₹${remaining.toLocaleString('en-IN')} more for <strong>Free Shipping</strong></div>`;
+            shippingHtml = `<div class="text-center mb-4 text-xs text-neutral-600 bg-white py-2 rounded-md border border-neutral-200">Add ₹${remaining.toLocaleString('en-IN')} more for <strong class="text-black">Free Shipping</strong></div>`;
         }
     }
 
@@ -489,10 +496,10 @@ function generateCartFooterHtml(totalValue) {
             <span>Total</span><span id="cart-total">₹${totalValue.toLocaleString('en-IN')}</span>
         </div>
         <div class="flex flex-col gap-3">   
-            <button onclick="checkoutWhatsApp()" class="w-full bg-[#25D366] text-white py-4 rounded-none uppercase tracking-widest text-sm font-medium hover:bg-[#128C7E] transition flex justify-center items-center gap-2">
+            <button onclick="checkoutWhatsApp()" class="w-full bg-[#25D366] text-white py-3.5 rounded-none uppercase tracking-widest text-xs font-semibold hover:bg-[#128C7E] transition flex justify-center items-center gap-2">
                 Checkout via WhatsApp
             </button>
-            <p class="text-center text-[11px] text-neutral-500 mt-2 uppercase tracking-wider font-semibold">⚠️ No Cash on Delivery (Prepaid Only)</p>
+            <p class="text-center text-[10px] text-neutral-500 mt-1 uppercase tracking-wider font-semibold">⚠️ No Cash on Delivery (Prepaid Only)</p>
         </div>
     `;
 }
