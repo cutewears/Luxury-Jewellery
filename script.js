@@ -152,7 +152,7 @@ window.toggleWishlist = function(productId) {
         showToast("Removed from wishlist", "wishlist");
     } else {
         wishlist.push(productId);
-        showToast("Added to wishlist! ❤️", "wishlist");
+        showToast("Added to wishlist!", "wishlist");
     }
     
     localStorage.setItem('cutewears_wishlist', JSON.stringify(wishlist));
