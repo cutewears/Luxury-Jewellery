@@ -215,14 +215,14 @@ window.openProductModal = function(productId) {
 
             <p class="text-xs md:text-sm text-neutral-500 mb-5">Hurry up! Only <span class="text-[#D32F2F] font-medium">Limited items</span> left in stock</p>
 
-            <div class="flex flex-col sm:flex-row gap-3 items-center">
-                <div class="flex items-center border border-neutral-300 rounded-full overflow-hidden bg-white w-full sm:w-32 justify-between flex-shrink-0 h-12">
-                    <button onclick="updateModalQty(-1)" class="px-4 h-full hover:bg-neutral-50 transition flex items-center justify-center w-full text-lg">-</button>
-                    <span id="modal-qty" class="text-center font-medium w-full pointer-events-none">1</span>
-                    <button onclick="updateModalQty(1)" class="px-4 h-full hover:bg-neutral-50 transition flex items-center justify-center w-full text-lg">+</button>
+            <div class="flex flex-row gap-3 items-center w-full">
+                <div class="flex items-center border border-neutral-300 rounded-full overflow-hidden bg-white w-28 md:w-32 flex-shrink-0 h-12 md:h-14">
+                    <button onclick="updateModalQty(-1)" class="w-10 h-full hover:bg-neutral-50 transition flex items-center justify-center text-xl pb-0.5">-</button>
+                    <span id="modal-qty" class="flex-1 text-center font-medium pointer-events-none">1</span>
+                    <button onclick="updateModalQty(1)" class="w-10 h-full hover:bg-neutral-50 transition flex items-center justify-center text-xl pb-0.5">+</button>
                 </div>
 
-                <button onclick="addFromModal(${product.id})" class="w-full flex-1 bg-black text-white h-12 px-6 rounded-full uppercase tracking-widest text-xs font-semibold hover:bg-neutral-800 transition flex justify-center items-center gap-2">
+                <button onclick="addFromModal(${product.id})" class="flex-1 bg-black text-white h-12 md:h-14 px-2 md:px-6 rounded-full uppercase tracking-widest text-[11px] md:text-xs font-bold hover:bg-neutral-800 transition flex justify-center items-center gap-2 shadow-md">
                     Add to Cart <span id="modal-btn-counter" class="bg-white text-black w-5 h-5 flex items-center justify-center rounded-full text-[10px] hidden font-bold">0</span>
                 </button>
             </div>
@@ -238,13 +238,12 @@ window.openProductModal = function(productId) {
     const modalWindow = document.getElementById('product-modal-content');
     
     overlay.classList.remove('hidden');
-    // Small delay to allow display:block to apply before animating opacity/transform
     setTimeout(() => {
         overlay.classList.remove('opacity-0');
         if(window.innerWidth < 768) {
-            modalWindow.classList.remove('translate-y-full'); // Mobile slides up
+            modalWindow.classList.remove('translate-y-full'); 
         } else {
-            modalWindow.classList.remove('scale-95'); // Desktop scales up
+            modalWindow.classList.remove('scale-95'); 
         }
     }, 10);
 };
