@@ -31,87 +31,39 @@
             <nav class="hidden md:flex gap-8 text-sm font-medium uppercase tracking-widest text-neutral-500">
                 <a href="index.html" class="hover:text-black transition">Home</a>
                 <a href="products.html" class="hover:text-black transition">Products</a>
-                <a href="about.html" class="text-black">About</a>
+                <a href="about.html" class="hover:text-black transition">About</a>
             </nav>
             
             <div class="flex items-center gap-2 z-50">
-                <a href="wishlist.html" class="relative p-2 text-black hover:text-[#E1306C] transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <a href="wishlist.html" class="relative p-2 text-[#E1306C] hover:text-[#C13584] transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#E1306C" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
                 </a>
-
-                <button onclick="toggleCart()" class="relative p-2 text-black hover:text-neutral-600 transition z-50">
+                
+                <button onclick="toggleCart()" class="relative p-2 text-black hover:text-neutral-600 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><path d="M3 6h18"></path><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
                     <span id="cart-badge" class="absolute -top-1 -right-1 bg-[#E1306C] text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center hidden">0</span>
                 </button>
             </div>
         </div>
+        
         <div id="mobile-menu" class="hidden absolute top-20 left-0 w-full bg-white border-b border-neutral-100 px-6 py-6 flex-col shadow-xl z-40 md:hidden">
             <a href="index.html" class="block text-sm font-medium uppercase tracking-widest text-neutral-500 hover:text-black transition py-4 border-b border-neutral-50">Home</a>
             <a href="products.html" class="block text-sm font-medium uppercase tracking-widest text-neutral-500 hover:text-black transition py-4 border-b border-neutral-50">Products</a>
-            <a href="wishlist.html" class="block text-sm font-medium uppercase tracking-widest text-neutral-500 hover:text-black transition py-4 border-b border-neutral-50">Wishlist</a>
-            <a href="about.html" class="block text-sm font-medium uppercase tracking-widest text-black py-4">About</a>
+            <a href="wishlist.html" class="block text-sm font-medium uppercase tracking-widest text-black py-4 border-b border-neutral-50">Wishlist</a>
+            <a href="about.html" class="block text-sm font-medium uppercase tracking-widest text-neutral-500 hover:text-black transition py-4">About</a>
         </div>
     </header>
 
-    <main class="flex-grow pt-32 pb-24 px-4 md:px-6 max-w-5xl mx-auto w-full">
-        
-        <section class="text-center mb-24 max-w-3xl mx-auto">
-            <span class="text-neutral-500 uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-4 block">Our Story</span>
-            <h1 class="text-4xl md:text-5xl font-serif mb-10 text-neutral-900 leading-tight">From <span class="text-[#E1306C]">Instagram</span> <br>to Your Jewellery Box.</h1>
-            
-            <div class="space-y-6 text-neutral-600 text-base md:text-lg leading-relaxed font-light text-left md:text-center">
-                <p>
-                    Cutewears began as a passion project on Instagram, created with a love for timeless jewellery and meaningful style. What started as sharing beautiful pieces online has grown into a brand trusted by customers who believe that elegance should be a part of everyday life.
-                </p>
-                <p>
-                    At Cutewears, we carefully curate jewellery that is stylish, versatile, and designed to complement every occasion—whether it’s a casual day out, a festive celebration, or a special milestone. We believe that the right piece of jewellery doesn’t just complete an outfit; it tells your story.
-                </p>
-                <p class="font-medium text-neutral-900 pt-4">
-                    Thank you for being a part of our journey and supporting a brand built with passion, creativity, and the love of beautiful details.
-                </p>
-            </div>
-        </section>
-
-        <section class="bg-white p-8 md:p-16 border border-neutral-100 flex flex-col md:flex-row items-center gap-10 md:gap-16 shadow-sm">
-            <div class="w-full md:w-2/5 aspect-[4/5] bg-neutral-100 relative overflow-hidden flex-shrink-0">
-                <img src="photos\WhatsApp Image 2026-06-14 at 15.37.00.jpeg" alt="Diya Sheth" class="w-full h-full object-cover  opacity-90 transition duration-700 hover:grayscale-0 hover:scale-105">
-            </div>
-            <div class="w-full md:w-3/5 text-left">
-                <span class="text-neutral-400 uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold mb-3 block">Meet The Founder</span>
-                <h2 class="text-3xl md:text-4xl font-serif mb-2 text-neutral-900">Virali Sheth</h2>
-                
-                <div class="space-y-5 text-neutral-600 text-sm md:text-base leading-relaxed font-light mt-8">
-                    <p>
-                        At just 21 years old, Virali Sheth transformed her passion for jewellery and fashion into Cutewears an Instagram born brand built with creativity, dedication, and a vision to make elegant jewellery accessible for every occasion.
-                    </p>
-                    <p>
-                        With a keen eye for trends and a love for timeless designs, Virali personally curates collections that help individuals express their unique style with confidence. Her goal is simple: to create jewellery that makes people feel beautiful, empowered, and celebrated in their everyday moments.
-                    </p>
-                    <p>
-                        What started as a small dream on social media continues to grow through the trust and support of the Cutewears community.
-                    </p>
-                </div>
-            </div>
-        </section>
-        
-        <div class="mt-20 max-w-2xl mx-auto text-center border-t border-neutral-200 pt-16">
-            <h3 class="text-2xl md:text-3xl font-serif text-neutral-900 mb-6">Stay Connected with Cutewears</h3>
-            <p class="text-neutral-600 text-sm md:text-base leading-relaxed font-light mb-4">
-                Follow us on Instagram to explore our latest collections, styling inspiration, and exclusive exhibition updates. Be a part of our journey and never miss what’s coming next.
-            </p>
-            <p class="text-neutral-900 text-sm md:text-base leading-relaxed font-medium mb-10">
-                Follow us on Instagram for exhibition announcements and new arrivals.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://www.instagram.com/cutewears.vs?igsh=dThrYXUweXk0bjNh" target="_blank" class="w-full sm:w-auto bg-[#E1306C] text-white px-8 py-4 rounded-none uppercase tracking-widest text-xs font-medium hover:bg-[#C13584] transition text-center">
-                    Follow on Instagram
-                </a>
-                <a href="https://wa.me/919820997084" target="_blank" class="w-full sm:w-auto bg-[#25D366] text-white px-8 py-4 rounded-none uppercase tracking-widest text-xs font-medium hover:bg-[#128C7E] transition text-center">
-                    Chat on WhatsApp
-                </a>
-            </div>
+    <main class="flex-grow pt-32 pb-24 px-4 md:px-6 max-w-7xl mx-auto w-full">
+        <div class="text-center mb-10 md:mb-12">
+            <h1 class="text-3xl md:text-4xl font-serif mb-4 flex items-center justify-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="#E1306C" stroke="#E1306C" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                Your Wishlist
+            </h1>
+            <p class="text-neutral-500 font-light text-sm md:text-base">Pieces you've fallen in love with.</p>
         </div>
+        
+        <div id="wishlist-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8"></div>
     </main>
 
     <footer class="bg-white py-12 md:py-16 border-t border-neutral-200 mt-auto">

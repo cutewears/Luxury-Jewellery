@@ -1,72 +1,352 @@
-// --- WHATSAPP CONFIGURATION ---
+// --- WHATSAPP & INSTAGRAM CONFIGURATION ---
 const WHATSAPP_NUMBER = "919820997084"; 
+const INSTAGRAM_USERNAME = "cutewears.vs";
 
 // --- PRODUCT DATABASE (Luxury Jewellery) ---
 const products = [
-     { id: 1, name: "Crystal Teardrop Necklace", price: 2100, image: "photos/item-1.jpeg" },
-    { id: 2, name: "Rose Gold Bangles", price: 1800, image: "photos/item-21.jpeg" },
-    { id: 3, name: "Vintage Sapphire Ring", price: 1600, image: "photos/item-17.jpeg" },
-    { id: 4, name: "Diamond Tennis Bracelet", price: 1800, image: "photos/item-4.jpeg" },
-    { id: 5, name: "Kundan Bridal Set (Set of Four)", price: 5800, image: "photos/item-5.jpeg" },
-    { id: 6, name: "Emerald Cut Pendant", price: 1700, image: "photos/item-6.jpeg" },
-    { id: 7, name: "Silver Hoop Earrings", price: 1250, image: "photos/item-7.jpeg" },
-    { id: 8, name: "Ruby Statement Necklace", price: 1700, image: "photos/item-8.jpeg" },
-    { id: 9, name: "Pearl Choker Set", price: 1300, image: "photos/item-9.jpeg" },
-    { id: 10, name: "Gold Plated Jhumkas", price: 1250, image: "photos/item-10.jpeg" },
-    { id: 11, name: "Solitaire Diamond Ring", price: 1600, image: "photos/item-11.jpeg" },
+    { id: 1, name: "Double Cushion Pearlescent Earrings", price: 2100, image: "photos/item-1.jpeg" },
+    { id: 2, name: "Cascadding Golden Honeybee Earrings", price: 1800, image: "photos/item-21.jpeg" },
+    { id: 3, name: "Gold Five-Petal Pearl Earrings", price: 1600, image: "photos/item-17.jpeg" },
+    { id: 4, name: "Four-Petal Crystal Earrings", price: 1800, image: "photos/item-4.jpeg" },
+    { id: 5, name: "Luxe Mixed Gold Bangle Stack (Set of Four)", price: 5800, image: "photos/item-5.jpeg" },
+    { id: 6, name: "Floral Cocktail Ring", price: 1700, image: "photos/item-6.jpeg" },
+    { id: 7, name: "Multi-Gemstone Lariate Necklace", price: 1250, image: "photos/item-7.jpeg" },
+    { id: 8, name: "Gold Fishbone Earring", price: 1700, image: "photos/item-8.jpeg" },
+    { id: 9, name: "Cushion-Cut Pearl Button Studs", price: 1300, image: "photos/item-9.jpeg" },
+    { id: 10, name: "Vertical Multi-Stone Drop Necklace", price: 1250, image: "photos/item-10.jpeg" },
+    { id: 11, name: "Sculptural Pavé Crystal Dangles", price: 1600, image: "photos/item-11.jpeg" },
     { id: 12, name: "Minimalist Gold Chain", price: 900, image: "photos/item-12.jpeg" },
-    { id: 13, name: "Amethyst Drop Earrings", price: 1400, image: "photos/item-13.jpeg" },
-    { id: 14, name: "Classic Platinum Band", price: 1200, image: "photos/item-14.jpeg" },
-    { id: 15, name: "Kundan Meenakari Necklace", price: 1600, image: "photos/item-15.jpeg" },
-    { id: 16, name: "Sparkling Crystal Studs", price: 1350, image: "photos/item-16.jpeg" },
-    { id: 17, name: "Antique Gold Choker", price: 1300, image: "photos/item-3.jpeg" },
-    { id: 18, name: "Opal Halo Ring", price: 1400, image: "photos/item-18.jpeg" },
-    { id: 19, name: "Sapphire Dangle Earrings", price: 1600, image: "photos/item-19.jpeg" },
-    { id: 20, name: "Diamond Cluster Pendant", price: 1250, image: "photos/item-20.jpeg" },
-    { id: 21, name: "Polki Kundan Necklace", price: 1350, image: "photos/item-2.jpeg" },
+    { id: 13, name: "Double Gold Orb Drop Earrings", price: 1400, image: "photos/item-13.jpeg" },
+    { id: 14, name: "Golden Sunburst Pearl Earrings", price: 1200, image: "photos/item-14.jpeg" },
+    { id: 15, name: "Gold Lip Crystal Earrings", price: 1600, image: "photos/item-15.jpeg" },
+    { id: 16, name: "Pearl Gold Knot Drop Earrings", price: 1350, image: "photos/item-16.jpeg" },
+    { id: 17, name: "Crinkled Gold Dangle Earrings", price: 1300, image: "photos/item-3.jpeg" },
+    { id: 18, name: "Gold Blossom Pearl Studs", price: 1400, image: "photos/item-18.jpeg" },
+    { id: 19, name: "Gold Open-Circle Pearl Earrings", price: 1600, image: "photos/item-19.jpeg" },
+    { id: 20, name: "Mixed-Cut Gemstone Y-Necklace", price: 1250, image: "photos/item-20.jpeg" },
+    { id: 21, name: "Textured Pearl Button Earrings ", price: 1350, image: "photos/item-2.jpeg" },
     { id: 22, name: "Pearl Bloom Earring", price: 1400, image: "photos/item-22.jpeg" },
-    { id: 23, name: "Rose Quartz Bracelet", price: 1500, image: "photos/item-23.jpeg" },
-    { id: 24, name: "Gold Tassel Earrings", price: 1500, image: "photos/item-24.jpeg" }
+    { id: 23, name: "Gold Honeybee Pearl Studs", price: 1500, image: "photos/item-23.jpeg" },
+    { id: 24, name: "Golden Pearl Drop Earrings", price: 1500, image: "photos/item-24.jpeg" }
 ];
 
-// --- CART STATE ---
+// --- APP STATE (Cart & Wishlist) ---
 let cart = [];
+let wishlist = [];
+
 try {
     const savedCart = JSON.parse(localStorage.getItem('cutewears_cart'));
-    if (Array.isArray(savedCart)) {
-        cart = savedCart.filter(item => item && item.id && item.name && item.price);
-    }
+    if (Array.isArray(savedCart)) cart = savedCart.filter(item => item && item.id && item.name && item.price);
+    
+    const savedWishlist = JSON.parse(localStorage.getItem('cutewears_wishlist'));
+    if (Array.isArray(savedWishlist)) wishlist = savedWishlist;
 } catch (e) {
     cart = [];
+    wishlist = [];
 }
 
 // --- INITIALIZE PAGE ---
 document.addEventListener('DOMContentLoaded', () => {
+    document.body.insertAdjacentHTML('beforeend', `
+        <div id="product-modal-overlay" class="fixed inset-0 bg-black/60 z-[60] hidden flex items-center justify-center backdrop-blur-sm opacity-0 transition-opacity duration-300 px-4">
+            <div id="product-modal-content" class="bg-white p-4 md:p-8 rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95 transition-transform duration-300 relative flex flex-col md:flex-row gap-6 md:gap-8 no-scrollbar">
+            </div>
+        </div>
+        <div id="toast-notification" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-neutral-900 text-white px-6 py-3 rounded-full shadow-2xl text-sm font-medium z-[70] translate-y-20 opacity-0 transition-all duration-300 pointer-events-none flex items-center gap-2">
+            <span id="toast-icon"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <span id="toast-message">Successfully added to bag!</span>
+        </div>
+    `);
+
+    document.getElementById('product-modal-overlay').addEventListener('click', (e) => {
+        if (e.target.id === 'product-modal-overlay') closeProductModal();
+    });
+
     updateCartUI();
+    
+    // Check which page we are on and render accordingly
     const productContainer = document.getElementById('product-container');
+    const wishlistContainer = document.getElementById('wishlist-container');
+    
     if (productContainer) {
         const limit = productContainer.dataset.limit ? parseInt(productContainer.dataset.limit) : products.length;
         renderProducts(productContainer, limit);
     }
+    
+    if (wishlistContainer) {
+        renderWishlist();
+    }
 });
 
-// --- RENDER PRODUCTS ---
+// --- RENDER PRODUCTS (With Light Frame & Heart Icon) ---
 function renderProducts(container, limit) {
     const itemsToShow = products.slice(0, limit);
-    container.innerHTML = itemsToShow.map(product => `
-        <div class="group flex flex-col cursor-pointer bg-white p-3 md:p-4 rounded-md shadow-md hover:shadow-xl transition-all duration-300 border border-neutral-100">
-            <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4 rounded-sm">
+    
+    container.innerHTML = itemsToShow.map(product => {
+        const isWished = wishlist.includes(product.id);
+        const heartSVG = isWished 
+            ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E1306C" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`
+            : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+
+        return `
+        <div class="group flex flex-col bg-white border border-neutral-200 p-2.5 md:p-3 rounded-xl shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+            <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4 rounded-lg cursor-pointer" onclick="openProductModal(${product.id})">
+                
+                <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-2 right-2 z-10 p-2 bg-white/90 backdrop-blur rounded-full text-neutral-400 hover:text-[#E1306C] hover:scale-110 transition shadow-sm">
+                    ${heartSVG}
+                </button>
+
                 <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full md:group-hover:scale-105 transition duration-700 ease-out">
-                <button onclick="addToCart(${product.id})" class="absolute bottom-2 md:bottom-4 left-2 md:left-4 right-2 md:right-4 bg-white/95 backdrop-blur text-black py-2.5 md:py-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 font-medium text-[10px] md:text-xs tracking-widest uppercase shadow-sm">
-                    Add to Bag
+                <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-2 md:bottom-3 left-2 md:left-3 right-2 md:right-3 bg-white/95 backdrop-blur text-black py-2 md:py-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 font-medium text-[10px] md:text-xs tracking-widest uppercase shadow-sm hover:bg-black hover:text-white rounded-md">
+                    Quick Add
                 </button>
             </div>
-            <div class="flex flex-col items-center text-center px-1 pb-1">
-                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full">${product.name}</h3>
+            <div class="flex flex-col items-center text-center px-1 pb-1 cursor-pointer" onclick="openProductModal(${product.id})">
+                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full hover:text-neutral-500 transition">${product.name}</h3>
                 <span class="text-neutral-500 tracking-wide text-xs md:text-sm mt-1">₹${product.price.toLocaleString('en-IN')}</span>
             </div>
         </div>
-    `).join('');
+        `;
+    }).join('');
+}
+
+// --- RENDER WISHLIST PAGE ---
+function renderWishlist() {
+    const container = document.getElementById('wishlist-container');
+    if (!container) return; // Only run if we are on wishlist.html
+
+    if (wishlist.length === 0) {
+        container.innerHTML = `
+            <div class="col-span-full flex flex-col items-center justify-center py-20 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mb-4"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                <h2 class="text-xl font-serif text-neutral-800 mb-2">Your wishlist is empty</h2>
+                <p class="text-neutral-500 text-sm mb-6 max-w-md">Looks like you haven't added anything to your wishlist yet. Explore our collections to find something beautiful.</p>
+                <a href="products.html" class="bg-black text-white px-8 py-3 uppercase tracking-widest text-xs font-medium hover:bg-neutral-800 transition">Explore Jewellery</a>
+            </div>
+        `;
+        return;
+    }
+
+    // Reuse the render code but only for wished items
+    const wishedProducts = products.filter(p => wishlist.includes(p.id));
+    
+    container.innerHTML = wishedProducts.map(product => {
+        // By definition, items here are in the wishlist, so heart is filled
+        const heartSVG = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E1306C" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+
+        return `
+        <div class="group flex flex-col bg-white border border-neutral-200 p-2.5 md:p-3 rounded-xl shadow-sm hover:shadow-[0_8px_30px_rgb(0,0,0,0.06)] transition-all duration-300">
+            <div class="relative overflow-hidden bg-neutral-100 aspect-square mb-3 md:mb-4 rounded-lg cursor-pointer" onclick="openProductModal(${product.id})">
+                <button onclick="event.stopPropagation(); toggleWishlist(${product.id})" class="absolute top-2 right-2 z-10 p-2 bg-white/90 backdrop-blur rounded-full text-neutral-400 hover:text-[#E1306C] hover:scale-110 transition shadow-sm">
+                    ${heartSVG}
+                </button>
+                <img src="${product.image}" alt="${product.name}" class="object-cover w-full h-full md:group-hover:scale-105 transition duration-700 ease-out">
+                <button onclick="event.stopPropagation(); addToCart(${product.id})" class="absolute bottom-2 md:bottom-3 left-2 md:left-3 right-2 md:right-3 bg-white/95 backdrop-blur text-black py-2 md:py-3 translate-y-16 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 font-medium text-[10px] md:text-xs tracking-widest uppercase shadow-sm hover:bg-black hover:text-white rounded-md">
+                    Quick Add
+                </button>
+            </div>
+            <div class="flex flex-col items-center text-center px-1 pb-1 cursor-pointer" onclick="openProductModal(${product.id})">
+                <h3 class="text-neutral-900 font-medium text-xs md:text-sm line-clamp-1 w-full hover:text-neutral-500 transition">${product.name}</h3>
+                <span class="text-neutral-500 tracking-wide text-xs md:text-sm mt-1">₹${product.price.toLocaleString('en-IN')}</span>
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+// --- WISHLIST LOGIC ---
+window.toggleWishlist = function(productId) {
+    const index = wishlist.indexOf(productId);
+    
+    if (index > -1) {
+        // Remove from wishlist
+        wishlist.splice(index, 1);
+        showToast("Removed from wishlist", "wishlist");
+    } else {
+        // Add to wishlist
+        wishlist.push(productId);
+        showToast("Added to wishlist! ❤️", "wishlist");
+    }
+    
+    // Save to local storage
+    localStorage.setItem('cutewears_wishlist', JSON.stringify(wishlist));
+    
+    // Re-render the UI based on what page we are on
+    const productContainer = document.getElementById('product-container');
+    const wishlistContainer = document.getElementById('wishlist-container');
+    
+    if (productContainer) {
+        const limit = productContainer.dataset.limit ? parseInt(productContainer.dataset.limit) : products.length;
+        renderProducts(productContainer, limit);
+    }
+    
+    if (wishlistContainer) {
+        renderWishlist();
+    }
+};
+
+// --- PRODUCT MODAL LOGIC ---
+let currentModalQty = 1;
+let modalTotalAdded = 0;
+
+window.openProductModal = function(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    currentModalQty = 1;
+    modalTotalAdded = 0;
+
+    const stock = Math.floor(Math.random() * 5) + 1;
+
+    const modalContent = document.getElementById('product-modal-content');
+    modalContent.innerHTML = `
+        <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-neutral-500 hover:text-black p-2 bg-white/80 backdrop-blur rounded-full w-8 h-8 flex items-center justify-center shadow-sm transition">✕</button>
+        <div class="w-full md:w-1/2 bg-neutral-100 rounded-lg overflow-hidden min-h-[300px]">
+            <img src="${product.image}" class="w-full h-full object-cover">
+        </div>
+        <div class="w-full md:w-1/2 flex flex-col justify-center py-2 md:py-0">
+            <h2 class="text-2xl md:text-3xl font-serif mb-2 text-neutral-900">${product.name}</h2>
+            <p class="text-xl font-medium mb-6">₹${product.price.toLocaleString('en-IN')}</p>
+
+            <div class="bg-[#E8EBE0]/60 border border-[#E8EBE0] rounded-lg p-5 mb-6 space-y-3 text-sm text-neutral-800">
+                <p class="flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 18H3c-1.1 0-2-.9-2-2V7c0-1.1.9-2 2-2h12l4 4v7c0 1.1-.9 2-2 2h-2"/><circle cx="8" cy="18" r="2"/><circle cx="18" cy="18" r="2"/><path d="M15 5v4"/></svg> Estimate delivery times: <strong>3-5 days</strong></p>
+                <hr class="border-neutral-300 border-dashed">
+                <p class="flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> <strong>No Cash On Delivery</strong> </p>
+                <hr class="border-neutral-300 border-dashed">
+                <p class="flex items-center gap-2"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg> Enjoy Free Shipping on Orders Above <strong>₹3100 </strong></p>
+            </div>
+
+            <p class="text-sm text-neutral-600 mb-6">Hurry up! Only <span class="text-[#D32F2F] font-semibold">Limited items</span> left in stock</p>
+
+            <div class="flex flex-col sm:flex-row gap-4 items-center">
+                <div class="flex items-center border border-black rounded-full overflow-hidden bg-white w-full sm:w-32 justify-between flex-shrink-0">
+                    <button onclick="updateModalQty(-1)" class="px-4 py-3 md:py-4 hover:bg-neutral-100 transition w-full">-</button>
+                    <span id="modal-qty" class="text-center font-medium w-full pointer-events-none">1</span>
+                    <button onclick="updateModalQty(1)" class="px-4 py-3 md:py-4 hover:bg-neutral-100 transition w-full">+</button>
+                </div>
+
+                <button onclick="addFromModal(${product.id})" class="w-full flex-1 bg-black text-white py-3 md:py-4 px-6 rounded-full uppercase tracking-widest text-xs font-medium hover:bg-neutral-800 transition flex justify-center items-center gap-2">
+                    Add to Cart <span id="modal-btn-counter" class="bg-white text-black w-5 h-5 flex items-center justify-center rounded-full text-[10px] hidden font-bold">0</span>
+                </button>
+            </div>
+
+            <button onclick="shareProduct(${product.id})" class="mt-6 flex items-center justify-center gap-2 text-sm font-medium text-neutral-500 hover:text-black transition w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Share this product
+            </button>
+        </div>
+    `;
+
+    const overlay = document.getElementById('product-modal-overlay');
+    overlay.classList.remove('hidden');
+    setTimeout(() => {
+        overlay.classList.remove('opacity-0');
+        modalContent.classList.remove('scale-95');
+    }, 10);
+};
+
+window.closeProductModal = function() {
+    const overlay = document.getElementById('product-modal-overlay');
+    const modalContent = document.getElementById('product-modal-content');
+    
+    overlay.classList.add('opacity-0');
+    modalContent.classList.add('scale-95');
+    
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+    }, 300);
+};
+
+window.updateModalQty = function(change) {
+    if (currentModalQty + change >= 1) {
+        currentModalQty += change;
+        document.getElementById('modal-qty').innerText = currentModalQty;
+    }
+};
+
+window.addFromModal = function(productId) {
+    addToCart(productId, currentModalQty);
+    
+    modalTotalAdded += currentModalQty;
+    const btnCounter = document.getElementById('modal-btn-counter');
+    btnCounter.innerText = modalTotalAdded;
+    btnCounter.classList.remove('hidden');
+    
+    currentModalQty = 1;
+    document.getElementById('modal-qty').innerText = currentModalQty;
+};
+
+// --- AMAZON-STYLE IMAGE SHARE LOGIC ---
+window.shareProduct = async function(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    const productUrl = "https://cutewears.github.io/Luxury-Jewellery/products.html";
+    const textToShare = `Check out ${product.name} for ₹${product.price.toLocaleString('en-IN')} at Cutewears!`;
+
+    try {
+        const response = await fetch(product.image);
+        const blob = await response.blob();
+        
+        const fileExtension = product.image.split('.').pop() || 'jpeg';
+        const file = new File([blob], `cutewears-product-${product.id}.${fileExtension}`, { type: blob.type });
+
+        const shareData = {
+            title: 'Cutewears Jewellery',
+            text: textToShare,
+            url: productUrl,
+        };
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            shareData.files = [file];
+            await navigator.share(shareData);
+        } else if (navigator.share) {
+            await navigator.share(shareData);
+        } else {
+            fallbackCopy(`${textToShare} \n\nShop here: ${productUrl}`);
+        }
+    } catch (error) {
+        console.error("Error sharing product:", error);
+        if (navigator.share) {
+            navigator.share({
+                title: 'Cutewears Jewellery',
+                text: textToShare,
+                url: productUrl
+            }).catch(err => fallbackCopy(`${textToShare} \n\nShop here: ${productUrl}`));
+        } else {
+            fallbackCopy(`${textToShare} \n\nShop here: ${productUrl}`);
+        }
+    }
+};
+
+function fallbackCopy(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast("Link copied to clipboard!", "success");
+        }).catch(err => {
+            forceLegacyCopy(text);
+        });
+    } else {
+        forceLegacyCopy(text);
+    }
+}
+
+function forceLegacyCopy(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed"; 
+    textArea.style.left = "-999999px"; 
+    textArea.style.top = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+        document.execCommand('copy');
+        showToast("Link copied to clipboard!", "success");
+    } catch (err) {
+        showToast("Failed to copy link.", "error");
+    }
+    textArea.remove();
 }
 
 // --- MOBILE MENU LOGIC ---
@@ -75,21 +355,48 @@ window.toggleMobileMenu = function() {
     if (menu) menu.classList.toggle('hidden');
 };
 
-// --- CART LOGIC ---
-window.addToCart = function(productId) {
+// --- CART & TOAST LOGIC ---
+let toastTimeout;
+window.showToast = function(msg = "Successfully added to bag!", type = "cart") {
+    const toast = document.getElementById('toast-notification');
+    const toastMsg = document.getElementById('toast-message');
+    const toastIcon = document.getElementById('toast-icon');
+    if (!toast) return;
+
+    if (toastMsg) toastMsg.innerText = msg;
+    
+    // Change icon based on type of toast
+    if (type === "wishlist") {
+        toastIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#E1306C" stroke="#E1306C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+    } else {
+        toastIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+    }
+
+    toast.classList.remove('translate-y-20', 'opacity-0');
+    toast.classList.add('translate-y-0', 'opacity-100');
+
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 3000);
+};
+
+window.addToCart = function(productId, qty = 1) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
     const existingItem = cart.find(item => item.id === productId);
 
     if (existingItem) {
-        existingItem.quantity += 1;
+        existingItem.quantity += qty;
     } else {
-        cart.push({ ...product, quantity: 1 });
+        cart.push({ ...product, quantity: qty });
     }
 
     saveCart();
     updateCartUI();
+    showToast("Successfully added to bag!", "cart");
 };
 
 window.updateQuantity = function(productId, change) {
@@ -117,8 +424,7 @@ function saveCart() {
 function updateCartUI() {
     const cartBadge = document.getElementById('cart-badge');
     const cartItemsContainer = document.getElementById('cart-items');
-    const cartTotal = document.getElementById('cart-total');
-    const emptyMsg = document.getElementById('empty-cart-msg');
+    const cartFooter = document.querySelector('#cart-drawer .border-t.bg-neutral-50');
 
     if(!cartBadge || !cartItemsContainer) return; 
 
@@ -127,15 +433,14 @@ function updateCartUI() {
     cartBadge.style.display = totalItems > 0 ? 'flex' : 'none';
 
     if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '';
-        if(emptyMsg) emptyMsg.style.display = 'block';
-        if(cartTotal) cartTotal.textContent = '₹0';
+        cartItemsContainer.innerHTML = '<p class="text-neutral-500 text-center mt-10">Your bag is empty.</p>';
+        if(cartFooter) {
+            cartFooter.innerHTML = generateCartFooterHtml(0);
+        }
         return;
     }
 
-    if(emptyMsg) emptyMsg.style.display = 'none';
     let totalValue = 0;
-
     cartItemsContainer.innerHTML = cart.map(item => {
         totalValue += item.price * item.quantity;
         return `
@@ -161,7 +466,35 @@ function updateCartUI() {
         `;
     }).join('');
 
-    if(cartTotal) cartTotal.textContent = `₹${totalValue.toLocaleString('en-IN')}`;
+    if (cartFooter) {
+        cartFooter.innerHTML = generateCartFooterHtml(totalValue);
+    }
+}
+
+function generateCartFooterHtml(totalValue) {
+    let shippingHtml = '';
+    
+    if (totalValue > 0) {
+        if (totalValue >= 3100) {
+            shippingHtml = `<div class="text-center mb-4 text-sm font-medium text-[#25D366] bg-[#25D366]/10 py-2 rounded-md border border-[#25D366]/20">✨ Free Shipping Unlocked! ✨</div>`;
+        } else {
+            const remaining = 3100 - totalValue;
+            shippingHtml = `<div class="text-center mb-4 text-sm text-neutral-600 bg-white py-2 rounded-md border border-neutral-200">Add ₹${remaining.toLocaleString('en-IN')} more for <strong>Free Shipping</strong></div>`;
+        }
+    }
+
+    return `
+        ${shippingHtml}
+        <div class="flex justify-between text-lg font-medium text-neutral-900 mb-6">
+            <span>Total</span><span id="cart-total">₹${totalValue.toLocaleString('en-IN')}</span>
+        </div>
+        <div class="flex flex-col gap-3">   
+            <button onclick="checkoutWhatsApp()" class="w-full bg-[#25D366] text-white py-4 rounded-none uppercase tracking-widest text-sm font-medium hover:bg-[#128C7E] transition flex justify-center items-center gap-2">
+                Checkout via WhatsApp
+            </button>
+            <p class="text-center text-[11px] text-neutral-500 mt-2 uppercase tracking-wider font-semibold">⚠️ No Cash on Delivery (Prepaid Only)</p>
+        </div>
+    `;
 }
 
 window.toggleCart = function() {
@@ -177,6 +510,12 @@ window.openCart = function() {
 window.checkoutWhatsApp = function() {
     if (cart.length === 0) return alert("Your bag is empty!");
 
+    let message = generateCheckoutMessage();
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+};
+
+function generateCheckoutMessage() {
     let message = `✨ *New Order – Cutewears* ✨\n\n`;
     message += `🛍️ *Order Details:*\n\n`;
     
@@ -193,10 +532,15 @@ window.checkoutWhatsApp = function() {
 
     message += `━━━━━━━━━━━━━━\n`;
     message += ` *Total Amount:* ₹${subtotal.toLocaleString('en-IN')}\n`;
+    
+    if (subtotal >= 3100) {
+         message += ` *Shipping:* Free Shipping Unlocked! ✨\n`;
+    }
+    
     message += `━━━━━━━━━━━━━━\n\n`;
+    message += `⚠️ Note: No Cash on Delivery (Prepaid Only)\n\n`;
     message += `Please confirm product availability and share the payment details.\n\n`;
     message += `Thank you! `;
-
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
-};
+    
+    return message;
+}
